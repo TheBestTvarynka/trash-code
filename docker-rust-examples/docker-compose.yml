@@ -1,32 +1,39 @@
 version: '3.7'
 services:
-    db:
-        image: postgres:15.2
-        restart: always
-        environment:
-          - POSTGRES_USER=postgres
-          - POSTGRES_PASSWORD=postgres
-          - POSTGRES_DB=testdb
-        logging:
-          options:
-            max-size: 10m
-            max-file: "3"
-        ports:
-          - '5438:5432'
-        volumes: 
-          - ./postgres-data:/home/pavlo-myroniuk/tbt/trash-code/docker-rust-examples/target/pgdata
-        networks:
-          - app-network
-    docker-rust-examples:
-        image: dre:6
-        restart: always
-        environment:
-          - LOG_LEVEL=debug
-          - PG_HOST=db
-        ports:
-          - '8080:8080'
-        networks:
-          - app-network
+  db:
+      image: postgres:15.2
+      restart: always
+      environment:
+        - POSTGRES_USER=${PG_USER:-postgres}
+        - POSTGRES_PASSWORD=${PG_PASS:-postgres}
+        - POSTGRES_DB=${PG_NAME:-testdb}
+      logging:
+        options:
+          max-size: 10m
+          max-file: "3"
+      ports:
+        - '5438:5432'
+      volumes: 
+        - /postgres-data:/home/pavlo-myroniuk/tbt/trash-code/docker-rust-examples/target/pgdata
+      networks:
+        - app-network
+  docker-rust-examples:
+      image: dre:6
+      depends_on:
+        - db
+      restart: always
+      environment:
+        - LOG_LEVEL=debug
+        - PG_HOST=db
+      ports:
+        - '8080:8080'
+      networks:
+        - app-network
+      # deploy:
+      #     mode: replicated
+      #     replicas: 2
 networks:
   app-network:
     driver: bridge
+volumes:
+  postgres-data:
