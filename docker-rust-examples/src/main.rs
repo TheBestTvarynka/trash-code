@@ -23,7 +23,8 @@ async fn db_status() -> impl Responder {
     config.dbname = Some("testdb".into());
     config.user = Some("postgres".into());
     config.password = Some("postgres".into());
-    config.host = Some("localhost".to_owned());
+    config.port = Some(5432);
+    config.host = Some(std::env::var("PG_HOST").unwrap_or_else(|_| "localhost".into()));
 
     let pool = config.create_pool(Some(Runtime::Tokio1), NoTls).unwrap();
 
