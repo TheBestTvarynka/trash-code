@@ -7,6 +7,7 @@ mod utils;
 use sspi::AuthIdentity;
 
 use crate::{
+    authentication::authenticate,
     credentials::{acquire_client_credentials_handle, acquire_server_creds_handle},
     initialization::{init_sspi_func_table, initialize_ntlm_server, show_security_packages},
 };
@@ -33,11 +34,21 @@ fn main() {
 
     let client_credentials_handle = unsafe { acquire_client_credentials_handle(&credentials) };
 
-    let server_credentials_handle = acquire_server_creds_handle(&credentials);
+    let server_credentials_handle = acquire_server_creds_handle(&credentials).credentials_handle;
 
     println!("Authentication...");
 
-    todo!();
+    let client_security_context = unsafe {
+        authenticate(
+            client_credentials_handle,
+            server_credentials_handle,
+            &mut server,
+        )
+    };
 
+    println!(
+        "Client security context: {} {}.",
+        client_security_context.dwLower, client_security_context.dwUpper
+    );
     println!("Message communication...");
 }

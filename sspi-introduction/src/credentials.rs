@@ -10,7 +10,7 @@ use winapi::{
 
 use crate::utils::str_to_win_wstring;
 
-pub unsafe fn acquire_client_credentials_handle(auth_data: &AuthIdentity) -> u64 {
+pub unsafe fn acquire_client_credentials_handle(auth_data: &AuthIdentity) -> CredHandle {
     let mut credentials_handle = CredHandle::default();
     let mut expiry = TimeStamp::default();
 
@@ -51,7 +51,12 @@ pub unsafe fn acquire_client_credentials_handle(auth_data: &AuthIdentity) -> u64
         );
     }
 
-    0
+    println!(
+        "Client credentials handle: {} {}.",
+        credentials_handle.dwLower, credentials_handle.dwUpper
+    );
+
+    credentials_handle
 }
 
 // Server side
