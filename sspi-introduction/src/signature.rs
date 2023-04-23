@@ -2,6 +2,7 @@ use winapi::um::sspi::{MakeSignature, SecBuffer, SecBufferDesc, SecHandle};
 
 use crate::utils::{log_sec_buffer_desc, vec_into_raw_ptr};
 
+/// An example of the message signature generation
 pub unsafe fn client_make_signature(message: &[u8], client_security_context: &mut SecHandle) {
     let sequence_number = 0;
 

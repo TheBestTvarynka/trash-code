@@ -1,5 +1,7 @@
 use std::{ptr::null_mut, slice::from_raw_parts};
 
+use num_traits::FromPrimitive;
+use sspi::{SecurityBuffer, SecurityBufferType};
 use winapi::um::sspi::{SecBufferDesc, SecHandle};
 
 pub unsafe fn c_wide_string_to_rs_string(s: *const u16) -> String {
@@ -47,4 +49,21 @@ pub unsafe fn log_sec_buffer_desc(name: &str, sec_buffer_desk: &SecBufferDesc) {
             )
         );
     }
+}
+
+pub unsafe fn win_sec_buff_desc_to_sspi_sec_buffers(
+    sec_buffer_desc: &SecBufferDesc,
+) -> Vec<SecurityBuffer> {
+    let mut buffers = Vec::with_capacity(sec_buffer_desc.cBuffers as usize);
+
+    for i in 0..sec_buffer_desc.cBuffers {
+        let buffer = sec_buffer_desc.pBuffers.add(i as usize);
+        buffers.push(SecurityBuffer {
+            buffer: from_raw_parts((*buffer).pvBuffer as *const u8, (*buffer).cbBuffer as usize)
+                .to_vec(),
+            buffer_type: SecurityBufferType::from_u32((*buffer).BufferType).unwrap(),
+        });
+    }
+
+    buffers
 }

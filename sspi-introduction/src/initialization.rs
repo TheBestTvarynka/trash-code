@@ -7,8 +7,7 @@ use windows_sys::Win32::Security::Authentication::Identity::{
 
 use crate::utils::c_wide_string_to_rs_string;
 
-// Client side
-
+/// Prints all available security packages on this machine
 pub fn show_security_packages() {
     unsafe {
         let mut number_of_packages = 0;
@@ -46,8 +45,6 @@ pub fn show_security_packages() {
 pub unsafe fn init_sspi_func_table() -> *mut SecurityFunctionTableW {
     InitSecurityInterfaceW()
 }
-
-// Server side
 
 pub fn initialize_ntlm_server() -> Ntlm {
     Ntlm::new()

@@ -12,7 +12,7 @@ use crate::{
     clean_up::close_handles,
     credentials::{acquire_client_credentials_handle, acquire_server_creds_handle},
     initialization::{init_sspi_func_table, initialize_ntlm_server, show_security_packages},
-    signature::client_make_signature,
+    // signature::client_make_signature,
 };
 
 fn main() {
@@ -29,6 +29,7 @@ fn main() {
 
     println!("Set up credentials...");
 
+    // Testing credentials
     let credentials = AuthIdentity {
         username: "testuser".into(),
         password: "test".to_owned().into(),
@@ -51,11 +52,14 @@ fn main() {
 
     println!("Communication...");
 
-    unsafe {
-        client_make_signature(b"TheBestTvarynka", &mut client_security_context);
-    }
+    // At this point, the client security context is established.
+    // So we can encrypt/decrypt, sign/verify messages
+    //
+    // unsafe {
+    //     client_make_signature(b"TheBestTvarynka", &mut client_security_context);
+    // }
 
-    println!("Finishing...");
+    println!("Clean up...");
 
     unsafe {
         close_handles(&mut client_credentials_handle, &mut client_security_context);

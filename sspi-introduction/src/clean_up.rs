@@ -1,5 +1,6 @@
 use winapi::um::sspi::{DeleteSecurityContext, FreeCredentialsHandle, SecHandle};
 
+/// Frees client credentials handle and deletes client security context
 pub unsafe fn close_handles(
     client_cred_handle: &mut SecHandle,
     client_context_handle: *mut SecHandle,

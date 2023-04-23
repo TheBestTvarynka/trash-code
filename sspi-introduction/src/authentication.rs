@@ -1,6 +1,6 @@
-use std::{ptr::null_mut, slice::from_raw_parts};
+use std::ptr::null_mut;
 
-use num_traits::cast::{FromPrimitive, ToPrimitive};
+use num_traits::cast::ToPrimitive;
 use sspi::{
     AuthIdentityBuffers, DataRepresentation, Ntlm, SecurityBuffer, SecurityBufferType,
     SecurityStatus, ServerRequestFlags, Sspi,
@@ -9,7 +9,10 @@ use winapi::um::sspi::{
     CredHandle, InitializeSecurityContextW, SecBuffer, SecBufferDesc, SecHandle, TimeStamp,
 };
 
-use crate::utils::{log_sec_buffer_desc, str_to_win_wstring, unwrap_sec_handle, vec_into_raw_ptr};
+use crate::utils::{
+    log_sec_buffer_desc, str_to_win_wstring, unwrap_sec_handle, vec_into_raw_ptr,
+    win_sec_buff_desc_to_sspi_sec_buffers,
+};
 
 const OK: i32 = 0;
 const CONTINUE_NEEDED: i32 = 0x0009_0312;
@@ -98,19 +101,8 @@ pub unsafe fn authenticate(
         // +--------+                                                           +--------+
         //
         // Convert Windows security buffers to the sspi-rs security buffers.
-        let mut server_input_buffers = Vec::with_capacity(client_output_buffers.cBuffers as usize);
-        for i in 0..client_output_buffers.cBuffers {
-            let client_output_buffer = client_output_buffers.pBuffers.add(i as usize);
-            server_input_buffers.push(SecurityBuffer {
-                buffer: from_raw_parts(
-                    (*client_output_buffer).pvBuffer as *const u8,
-                    (*client_output_buffer).cbBuffer as usize,
-                )
-                .to_vec(),
-                buffer_type: SecurityBufferType::from_u32((*client_output_buffer).BufferType)
-                    .unwrap(),
-            });
-        }
+        let mut server_input_buffers =
+            win_sec_buff_desc_to_sspi_sec_buffers(&client_output_buffers);
         let mut server_output_buffers = vec![SecurityBuffer::new(
             Vec::with_capacity(1024),
             SecurityBufferType::Token,
