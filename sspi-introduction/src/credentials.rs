@@ -47,13 +47,13 @@ pub unsafe fn acquire_client_credentials_handle(auth_data: &AuthIdentity) -> Cre
     if result != 0 {
         panic!(
             "Can not acquire client credentials handle. Error code: {:0x?}",
-            result
+            result,
         );
     }
 
     println!(
         "Client credentials handle: {} {}.",
-        credentials_handle.dwLower, credentials_handle.dwUpper
+        credentials_handle.dwLower, credentials_handle.dwUpper,
     );
 
     credentials_handle

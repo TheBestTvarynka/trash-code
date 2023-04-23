@@ -33,8 +33,6 @@ pub unsafe fn authenticate(
         pBuffers: null_mut(),
     };
 
-    // we don't need to allocate memory because we use ALLOCATE_MEMORY flag during authentication
-
     let mut target_name = str_to_win_wstring("TERMSRV\\testuser");
 
     loop {
@@ -71,7 +69,7 @@ pub unsafe fn authenticate(
         );
 
         log_sec_buffer_desc("Client output buffers", &client_output_buffers);
-        println!("Status code: {:0x?}", client_status);
+        println!("Client status code: {:0x?}", client_status);
 
         if client_status != OK
             && client_status != CONTINUE_NEEDED
