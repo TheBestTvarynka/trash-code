@@ -3,10 +3,13 @@ use std::ptr::null_mut;
 use sspi::{AcquireCredentialsHandleResult, AuthIdentity, AuthIdentityBuffers};
 use winapi::{
     shared::rpcdce::SEC_WINNT_AUTH_IDENTITY_W,
-    um::sspi::{AcquireCredentialsHandleW, CredHandle, TimeStamp},
+    um::sspi::{
+        AcquireCredentialsHandleW, CredHandle, QueryCredentialsAttributesW,
+        SecPkgCredentials_NamesW, TimeStamp, SECPKG_CRED_ATTR_NAMES,
+    },
 };
 
-use crate::utils::str_to_win_wstring;
+use crate::utils::{c_wide_string_to_rs_string, str_to_win_wstring};
 
 /// Acquires client credentials handle
 pub unsafe fn acquire_client_credentials_handle(auth_data: &AuthIdentity) -> CredHandle {
@@ -66,4 +69,22 @@ pub fn acquire_server_creds_handle(
         credentials_handle: Some(auth_data.clone().into()),
         expiry: None,
     }
+}
+
+pub unsafe fn show_cred_info(client_credentials_handle: &mut CredHandle) {
+    let mut credentials_name = SecPkgCredentials_NamesW::default();
+    let status = QueryCredentialsAttributesW(
+        client_credentials_handle,
+        SECPKG_CRED_ATTR_NAMES,
+        &mut credentials_name as *mut SecPkgCredentials_NamesW as *mut _,
+    );
+
+    if status != 0 {
+        panic!("Can not query credentials name. Error code: {:0x?}", status);
+    }
+
+    println!(
+        "Credentials name: {:?}",
+        c_wide_string_to_rs_string(credentials_name.sUserName)
+    );
 }

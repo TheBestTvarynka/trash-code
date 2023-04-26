@@ -1,4 +1,4 @@
-use std::ptr::null_mut;
+use std::{ptr::null_mut, slice::from_raw_parts};
 
 use num_traits::cast::ToPrimitive;
 use sspi::{
@@ -6,7 +6,8 @@ use sspi::{
     SecurityStatus, ServerRequestFlags, Sspi,
 };
 use winapi::um::sspi::{
-    CredHandle, InitializeSecurityContextW, SecBuffer, SecBufferDesc, SecHandle, TimeStamp,
+    CredHandle, InitializeSecurityContextW, QueryContextAttributesW, SecBuffer, SecBufferDesc,
+    SecHandle, SecPkgContext_SessionKey, TimeStamp, SECPKG_ATTR_SESSION_KEY,
 };
 
 use crate::utils::{
@@ -149,4 +150,26 @@ pub unsafe fn authenticate(
             return client_security_context;
         }
     }
+}
+
+pub unsafe fn show_session_key(client_security_context: &mut SecHandle) {
+    let mut session_key = SecPkgContext_SessionKey::default();
+
+    let status = QueryContextAttributesW(
+        client_security_context,
+        SECPKG_ATTR_SESSION_KEY,
+        &mut session_key as *mut SecPkgContext_SessionKey as *mut _,
+    );
+
+    if status != 0 {
+        panic!("Can not query session key. Error code: {:0x?}", status);
+    }
+
+    println!(
+        "Established session key: {:?}",
+        from_raw_parts(
+            session_key.SessionKey as *const u8,
+            session_key.SessionKeyLength as usize
+        )
+    );
 }
