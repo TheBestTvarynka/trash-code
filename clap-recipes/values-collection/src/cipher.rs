@@ -1,6 +1,9 @@
 use std::fmt::{self, Display, Formatter};
 
-use clap::{error::ErrorKind, Error};
+use clap::{
+    error::{ContextKind, ContextValue, ErrorKind},
+    Error,
+};
 
 const AES128: &str = "aes128";
 const AES256: &str = "aes256";
@@ -37,7 +40,18 @@ impl TryFrom<&str> for Cipher {
             AES128 => Ok(Self::Aes128),
             AES256 => Ok(Self::Aes256),
             DES3 => Ok(Self::Des3),
-            _ => Err(Error::new(ErrorKind::InvalidValue)),
+            _ => {
+                let mut error = Error::new(ErrorKind::InvalidValue);
+                error.insert(
+                    ContextKind::InvalidArg,
+                    ContextValue::String("enc-algs".into()),
+                );
+                error.insert(
+                    ContextKind::InvalidValue,
+                    ContextValue::String(format!("Invalid algorithm name: {}", value)),
+                );
+                Err(error)
+            }
         }
     }
 }
