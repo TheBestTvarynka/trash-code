@@ -1,15 +1,10 @@
 use std::path::PathBuf;
 
-use clap::{command, ArgGroup, Args, Parser, Subcommand};
+use clap::{command, Args, Parser, Subcommand};
 use url::Url;
 
 #[derive(Debug, Clone, Args)]
-// #[command(subcommand)]
-#[clap(group(
-    ArgGroup::new("file-source")
-        .required(true)
-        .args(&["file", "link"]),
-))]
+#[group(required = true, args = ["file", "link"])]
 /// Possible types of the file source
 struct FileSource {
     /// Path to the image on the device
@@ -23,6 +18,7 @@ struct FileSource {
 
 #[derive(Debug, Clone, Subcommand)]
 enum Command {
+    /// Upload image to the Imgur
     Upload {
         /// File to upload
         #[command(flatten)]
@@ -32,6 +28,7 @@ enum Command {
         #[arg(long)]
         folder: String,
     },
+    // Download image from the Imgur
     Download {
         /// Source image link
         #[arg(long)]
