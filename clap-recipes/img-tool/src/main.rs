@@ -41,14 +41,27 @@ enum Command {
 }
 
 #[derive(Debug, Clone, Args)]
-struct ApiKey {
+struct ApiKeyData {
     /// app id
-    #[arg(long)]
-    pub api_app_id: String,
+    #[arg(long, requires = "api_app_secret")]
+    pub api_app_id: Option<String>,
 
     /// app secret
+    #[arg(long, requires = "api_app_id")]
+    pub api_app_secret: Option<String>,
+}
+
+#[derive(Debug, Clone, Args)]
+#[group(required = true, args = ["api_key_file", "api_app_id", "api_app_secret"])]
+/// Possible types of the api key source
+struct ApiKey {
+    /// Path to the json file with API key
     #[arg(long)]
-    pub api_app_secret: String,
+    api_key_file: Option<PathBuf>,
+
+    /// Specify API key data in args
+    #[command(flatten)]
+    api_key_data: ApiKeyData,
 }
 
 /// Img tool config structure
