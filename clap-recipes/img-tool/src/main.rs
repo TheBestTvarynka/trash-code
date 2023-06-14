@@ -9,11 +9,11 @@ use url::Url;
 struct FileSource {
     /// Path to the image on the device
     #[arg(long)]
-    file: Option<PathBuf>,
+    pub file: Option<PathBuf>,
 
     /// Url to the image on the Internet
     #[arg(long)]
-    link: Option<Url>,
+    pub link: Option<Url>,
 }
 
 #[derive(Debug, Clone, Subcommand)]
@@ -40,6 +40,17 @@ enum Command {
     },
 }
 
+#[derive(Debug, Clone, Args)]
+struct ApiKey {
+    /// app id
+    #[arg(long)]
+    pub api_app_id: String,
+
+    /// app secret
+    #[arg(long)]
+    pub api_app_secret: String,
+}
+
 /// Img tool config structure
 #[derive(Parser, Debug)]
 struct Config {
@@ -47,9 +58,9 @@ struct Config {
     #[command(subcommand)]
     pub command: Command,
 
-    /// Path to the api key file
-    #[arg(long, env = "API-KEY")]
-    pub api_key: PathBuf,
+    /// API key data
+    #[command(flatten)]
+    pub api_key: ApiKey,
 }
 
 fn main() {
