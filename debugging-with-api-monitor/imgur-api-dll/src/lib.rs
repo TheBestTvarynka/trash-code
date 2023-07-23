@@ -8,7 +8,7 @@ use imgur_api_client::ImgurApi;
 use libc::{c_void, c_char, c_ulonglong};
 
 #[no_mangle]
-pub unsafe extern "system" fn ImgurInitClient(client_id: *const c_char, client_secret: *const c_char) -> *mut c_void {
+pub unsafe extern "C" fn ImgurInitClient(client_id: *const c_char, client_secret: *const c_char) -> *mut c_void {
     let client_id = CStr::from_ptr(client_id);
     let client_secret = CStr::from_ptr(client_secret);
 
@@ -18,7 +18,7 @@ pub unsafe extern "system" fn ImgurInitClient(client_id: *const c_char, client_s
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn ImgurGetComment(context: *mut c_void, comment_id: c_ulonglong, comment: *mut *mut FiiComment) -> u32 {
+pub unsafe extern "C" fn ImgurGetComment(context: *mut c_void, comment_id: c_ulonglong, comment: *mut *mut FiiComment) -> u32 {
     let context: Box<ImgurApi> = Box::from_raw(context as *mut _ );
 
     if let Ok(c) = context.comment(comment_id) {
