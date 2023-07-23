@@ -1,0 +1,12 @@
+[package]
+name = "imgur-api-dll"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "imgur_api"
+crate-type = ["cdylib"]
+
+[dependencies]
+imgur-api-client = { path = "../imgur-api-client" }
+libc = "0.2.147"

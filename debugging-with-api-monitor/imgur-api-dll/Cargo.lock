@@ -338,6 +338,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "imgur-api-dll"
+version = "0.1.0"
+dependencies = [
+ "imgur-api-client",
+ "libc",
+]
+
+[[package]]
 name = "indexmap"
 version = "1.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
