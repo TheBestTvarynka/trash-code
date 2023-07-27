@@ -40,7 +40,9 @@ struct FiiComment {
 extern "C" {
 
 void *ImgurInitClient(const char *client_id, const char *client_secret);
+typedef void* (ImgurInitClientFn)(const char*, const char*);
 
 uint32_t ImgurGetComment(void *context, unsigned long long comment_id, FiiComment **comment);
+typedef uint32_t (ImgurGetCommentFn)(void*, unsigned long long, FiiComment**);
 
 } // extern "C"

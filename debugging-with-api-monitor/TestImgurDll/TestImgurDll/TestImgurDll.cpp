@@ -7,6 +7,7 @@ using std::endl;
 
 int main()
 {
+    cout << sizeof(bool) << endl;
     HMODULE imgur = LoadLibraryA("imgur_api.dll");
     if (!imgur)
     {
@@ -30,11 +31,11 @@ int main()
     const char* client_id = "3d8012c2f66acfb";
     const char* client_secret = "708d779959d043dd6da2d158abaa022931f708a8";
 
-    void* context = ((void* (*)(const char*, const char*))ImgurInitClientAddress)(client_id, client_secret);
+    void* context = ((ImgurInitClientFn*)ImgurInitClientAddress)(client_id, client_secret);
 
     unsigned long long comment_id = 1911999579;
     FiiComment* comment = nullptr;
-    uint32_t status = ((uint32_t (*)(void*, unsigned long long, FiiComment**))ImgurGetCommentAddress)(context, comment_id, &comment);
+    uint32_t status = ((ImgurGetCommentFn*)ImgurGetCommentAddress)(context, comment_id, &comment);
 
     if (!status)
     {
