@@ -1,0 +1,49 @@
+<ApiMonitor>
+    <Include Filename="Headers\windows.h.xml" />
+
+    <Module Name="imgur_api.dll" CallingConvention="STDCALL" Category="Imgur">
+        <Variable Name="FfiCommentData" Type="Struct">
+            <Field Type="UINT64" Name="id" />
+            <Field Type="const char*" Name="image_id" />
+            <Field Type="const char*" Name="comment" />
+            <Field Type="const char*" Name="author" />
+            <Field Type="UINT64" Name="author_id" />
+            <Field Type="char" Name="on_album" />
+            <Field Type="const char*" Name="album_cover" />
+            <Field Type="UINT32" Name="ups" />
+            <Field Type="UINT32" Name="downs" />
+            <Field Type="UINT32" Name="points" />
+            <Field Type="UINT32" Name="datetime" />
+            <Field Type="UINT64" Name="parent_id" />
+            <Field Type="char" Name="deleted" />
+            <Field Type="char" Name="is_voted" />
+            <Field Type="char" Name="vote" />
+            <Field Type="const char*" Name="platform" />
+            <Field Type="char" Name="has_admin_badge" />
+            <Field Type="UINT64*" Name="children" />
+            <Field Type="UINT32" Name="children_len" />
+        </Variable>
+
+        <Variable Name="FfiComment" Type="Struct">
+            <Field Type="FfiCommentData" Name="data" />
+            <Field Type="UINT32" Name="status" />
+            <Field Type="char" Name="success" />
+        </Variable>
+
+        <Variable Name="FfiComment*" Type="Pointer" Base="FfiComment" />
+        <Variable Name="FfiComment**" Type="Pointer" Base="FfiComment*" />
+
+        <Api Name="ImgurInitClient">
+            <Param Type="const char*" Name="client_id" />
+            <Param Type="const char*" Name="client_secret" />
+            <Return Type="void*" />
+        </Api>
+
+        <Api Name="ImgurGetComment">
+            <Param Type="void*" Name="context" />
+            <Param Type="unsigned long" Name="comment_id" />
+            <Param Type="FfiComment**" Name="comment" />
+            <Return Type="UINT32" />
+        </Api>
+    </Module>
+</ApiMonitor>
