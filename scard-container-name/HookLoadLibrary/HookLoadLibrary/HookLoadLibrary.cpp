@@ -5,7 +5,7 @@
 using namespace std;
 
 // .dll to inject
-char BAD_DLL_PATH[] = "C:\\Users\\pw14\\Documents\\projects\\bad\\x64\\Debug\\bad.dll";
+char BAD_DLL_PATH[] = "E:\\Documents\\projects\\bad\\x64\\Debug\\bad.dll";
 unsigned int BAD_DLL_PATH_LEN = sizeof(BAD_DLL_PATH) + 1;
 
 void* get_load_library_a_fn()
@@ -53,7 +53,7 @@ bool inject_dll(HANDLE hProcess, void* load_library_a_fn)
     return true;
 }
 
-// Creates a suspended mstsx.exe process, injects the dll, and continues the execution.
+// Creates a suspended "SignDataTmp.exe" process, injects the dll, and continues the execution.
 void hook_new_mstsc()
 {
     void* load_library_a_fn = get_load_library_a_fn();
@@ -67,7 +67,8 @@ void hook_new_mstsc()
     ZeroMemory(&si, sizeof(si));
     si.cb = sizeof(si);
 
-    LPWSTR exe_path = _tcsdup(TEXT("C:\\Users\\pw14\\Documents\\Visual Studio 2022\\Projects\\SignDataTmp\\SignDataTmp\\bin\\Debug\\net6.0\\SignDataTmp.exe"));
+    // Note: replace with your own exe path.
+    LPWSTR exe_path = _tcsdup(TEXT("E:\\Documents\\Visual Studio 2022\\Projects\\SignDataTmp\\SignDataTmp\\bin\\Debug\\net6.0\\SignDataTmp.exe"));
 
     if (!CreateProcess(NULL, exe_path, NULL, NULL, false, CREATE_SUSPENDED, NULL, NULL, &si, &pi))
     {
