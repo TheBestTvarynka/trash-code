@@ -11,16 +11,20 @@ namespace TpmSmartcardSigning
             Process currentProcess = Process.GetCurrentProcess();
             Console.WriteLine("Current Process ID: " + currentProcess.Id);
 
+            // Just to pause the execution.
+            Console.ReadLine();
+
             // Container name of the emulated smart card.
-            string containerName = "1b22c362-46ba-4889-ad5c-01f7f25fc10awww";
+            string containerName = Environment.GetEnvironmentVariable("WINSCARD_CONTAINER");
 
             SecureString pwd = new SecureString();
-            foreach (char c in "214653")
+            foreach (char c in Environment.GetEnvironmentVariable("WINSCARD_PIN"))
             {
                 pwd.AppendChar(c);
             }
 
-            CspParameters csp = new CspParameters(1,
+            CspParameters csp = new CspParameters(
+                1,
                 "Microsoft Base Smart Card Crypto Provider",
                 containerName
             );
