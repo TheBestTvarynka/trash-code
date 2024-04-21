@@ -7,10 +7,11 @@
 
 #define MSRDPEX_MAX_PATH 1024
 
-char LOG_FILE_PATH[] = "C:\\Users\\pw14\\Documents\\messages.txt";
-char WINSCARD_DLL_REPLACEMENT_PATH[] = "C:\\Users\\pw14\\Documents\\projects\\sspi-rs\\target\\debug\\winscard.dll";
+// Do not forget to set your own paths.
+char LOG_FILE_PATH[] = "E:\\Documents\\messages.txt";
+char WINSCARD_DLL_REPLACEMENT_PATH[] = "E:\\Documents\\projects\\sspi-rs\\target\\debug\\sspi.dll";
 
-// Yes, it's very stupid logging but it's perfect for debugging utils like this.
+// Yes, it's very stupid logging but it's perfect for debugging util like this one.
 void log_message(const char* message)
 {
     std::ofstream logfile;
@@ -19,6 +20,12 @@ void log_message(const char* message)
     logfile.close();
 }
 
+// The code below are copied from the MsRdpEx report and a little bit modified.
+// The purpose of the code below is to overcome the delayed `winscard.dll` loading.
+// 
+// More details you can read here:
+// * https://github.com/Devolutions/MsRdpEx/pull/84.
+// * https://github.com/Devolutions/MsRdpEx.
 int MsRdpEx_ConvertFromUnicode(UINT CodePage, DWORD dwFlags, LPCWSTR lpWideCharStr, int cchWideChar,
     LPSTR* lpMultiByteStr, int cbMultiByte, LPCSTR lpDefaultChar,
     LPBOOL lpUsedDefaultChar)
@@ -238,6 +245,7 @@ LONG NtOpenFile_replacement(PHANDLE FileHandle, ACCESS_MASK DesiredAccess,
 
     return ntstatus;
 }
+// End of the copied code.
 
 bool install_load_library_hook()
 {
@@ -251,6 +259,7 @@ bool install_load_library_hook()
     if (!g_hNtDll)
     {
         log_message("ntdll module handle is null :(");
+        return false;
     }
     else
     {
@@ -260,6 +269,7 @@ bool install_load_library_hook()
     if (!f_NtOpenFile)
     {
         log_message("NtOpenFile is null :(");
+        return false;
     }
     else
     {
