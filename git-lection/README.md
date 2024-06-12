@@ -6,20 +6,21 @@
 2. When you finish it, you will have another task.
 3. Repeat until no tasks are left.
 
-## Task 1
+## Task 2
 
 ### Situation
 
-You have some code in your testing branch and want to apply it to your currect branch. But you want only some part of the code, only specific commits.
+Observe commits. Some of them contain mistaked. Please, fix them. We cannot ship bad commits to the customer.
 
 ### Info
 
-In this task you'll learn the [`git cherry-pick`](https://git-scm.com/docs/git-cherry-pick) command.
+In this task you'll learn the [`git rebase`](https://git-scm.com/docs/git-rebase) command (or at least one usage of it).
 
-> Apply the changes introduced by some existing commits.
-
-In other words, copy some commit to your current branch.
+> Reapply commits on top of another base tip.
 
 ### Task
 
-Apply the last 4 commits of the `fix/memory-leak` branch.
+1. Fix commit messages:
+  * *tbt-app: add conversion string* -> *tbt-app: add conversion string;*
+  * *feat(git): init tbt-app crate;* -> *feat(git): tbt-app: init tbt-app crate;*
+2. Apply the following commit: ``.
