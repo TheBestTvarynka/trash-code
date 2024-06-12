@@ -1,19 +1,21 @@
 # Git lection
 
-## Task 3
+## Task 4
 
-### Tips
+### Info
 
-[Oh Shit, Git!?!](https://ohshitgit.com/)
+[`git reset`](https://git-scm.com/docs/git-reset)
 
-* [`git reflog`](https://git-scm.com/docs/git-reflog)
-  > This command manages the information recorded in the reflogs.
-* [`git commit --amend ...`](https://git-scm.com/docs/git-commit)
-* [`git reset HEAD~ --hard`](https://git-scm.com/docs/git-commit)
+> Reset current HEAD to the specified state.
 
-### Wait...
+It's a great comment to "undo" the last commit. It can be often used with the `git rebase` to split the commit into a few.
 
-The last command in the list contains wrong link. Please, fix it.
+### Task
+
+Observe current commits. Split the `feat(git): tbt-app: implement strings conversion;` commit into two:
+
+* The first commit adds a new function.
+* The second commit introduces the usage of this function.
 
 ### What's next?
 
