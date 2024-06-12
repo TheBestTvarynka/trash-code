@@ -10,6 +10,15 @@ pub unsafe fn c_w_str_to_string(s: *const u16) -> String {
     String::from_utf16_lossy(unsafe { from_raw_parts(s, len) })
 }
 
+fn prepate_data() -> *const u16 {
+    Box::into_raw("Tbt\0"
+        .encode_utf16()
+        .collect::<Vec<_>>()
+        .into_boxed_slice()) as *const _
+}
+
 fn main() {
-    println!("Tbt was here.");
+    println!("{}", unsafe {
+        c_w_str_to_string(prepate_data())
+    });
 }
