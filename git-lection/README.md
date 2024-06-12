@@ -1,25 +1,20 @@
 # Git lection
 
-## Rules:
+## Task 3
 
-1. For each step, you have a task.
-2. When you finish it, you will have another task.
-3. Repeat until no tasks are left.
+### Tips
 
-## Task 1
+[Oh Shit, Git!?!](https://ohshitgit.com/)
 
-### Situation
+* [`git reflog`](https://git-scm.com/docs/git-reflog)
+  > This command manages the information recorded in the reflogs.
+* [`git commit --amend ...`](https://git-scm.com/docs/git-commit)
+* [`git reset HEAD~ --hard`](https://git-scm.com/docs/git-commit)
 
-You have some code in your testing branch and want to apply it to your currect branch. But you want only some part of the code, only specific commits.
+### Wait...
 
-### Info
+The last command in the list contains wrong link. Please, fix it.
 
-In this task you'll learn the [`git cherry-pick`](https://git-scm.com/docs/git-cherry-pick) command.
+### What's next?
 
-> Apply the changes introduced by some existing commits.
-
-In other words, copy some commit to your current branch.
-
-### Task
-
-Apply the last 4 commits of the `fix/memory-leak` branch.
+Please, apply the next commit in this branch to get a new task.
