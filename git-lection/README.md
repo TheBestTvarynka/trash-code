@@ -1,21 +1,24 @@
 # Git lection
 
-## Task 4
+## Task 5
 
 ### Info
 
-[`git reset`](https://git-scm.com/docs/git-reset)
+[`git stash`](https://git-scm.com/docs/git-stash)
 
-> Reset current HEAD to the specified state.
+> Stash the changes in a dirty working directory away.
 
 It's a great comment to "undo" the last commit. It can be often used with the `git rebase` to split the commit into a few.
 
 ### Task
 
-Observe current commits. Split the `feat(git): tbt-app: implement strings conversion;` commit into two:
+1. Change this file a little bit.
+2. Switch to the `fix/memoty-leak` branch and refactor the code.
+3. Switch back and apply stashed changes, finish the task.
 
-* The first commit adds a new function.
-* The second commit introduces the usage of this function.
+### **Change me**
+
+Task status: `TODO`.
 
 ### What's next?
 
