@@ -1,0 +1,411 @@
+-- The C compiler identification is GNU 14.1.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CFLAG-Weverything
+-- Performing Test CFLAG-Weverything - Failed
+CMake Warning at cmake/CompilerFlags.cmake:8 (message):
+  compiler does not support -Weverything
+Call Stack (most recent call first):
+  cmake/CompilerFlags.cmake:48 (CheckCFlag)
+  CMakeLists.txt:70 (include)
+
+
+-- Performing Test CFLAG-Wall
+-- Performing Test CFLAG-Wall - Success
+-- Performing Test CFLAG-Wpedantic
+-- Performing Test CFLAG-Wpedantic - Success
+-- Performing Test CFLAG-Wno-padded
+-- Performing Test CFLAG-Wno-padded - Success
+-- Performing Test CFLAG-Wno-cast-align
+-- Performing Test CFLAG-Wno-cast-align - Success
+-- Performing Test CFLAG-Wno-declaration-after-statement
+-- Performing Test CFLAG-Wno-declaration-after-statement - Success
+-- Performing Test CFLAG-Wno-unsafe-buffer-usage
+-- Performing Test CFLAG-Wno-unsafe-buffer-usage - Failed
+CMake Warning at cmake/CompilerFlags.cmake:8 (message):
+  compiler does not support -Wno-unsafe-buffer-usage
+Call Stack (most recent call first):
+  cmake/CompilerFlags.cmake:48 (CheckCFlag)
+  CMakeLists.txt:70 (include)
+
+
+-- Performing Test CFLAG-Wno-reserved-identifier
+-- Performing Test CFLAG-Wno-reserved-identifier - Failed
+CMake Warning at cmake/CompilerFlags.cmake:8 (message):
+  compiler does not support -Wno-reserved-identifier
+Call Stack (most recent call first):
+  cmake/CompilerFlags.cmake:48 (CheckCFlag)
+  CMakeLists.txt:70 (include)
+
+
+-- Performing Test CFLAG-Wno-covered-switch-default
+-- Performing Test CFLAG-Wno-covered-switch-default - Failed
+CMake Warning at cmake/CompilerFlags.cmake:8 (message):
+  compiler does not support -Wno-covered-switch-default
+Call Stack (most recent call first):
+  cmake/CompilerFlags.cmake:48 (CheckCFlag)
+  CMakeLists.txt:70 (include)
+
+
+Using CFLAGS  -Wall -Wpedantic -Wno-padded -Wno-cast-align -Wno-declaration-after-statement
+-- Found ALSA: /usr/lib/libasound.so (found version "1.2.12")
+-- Found OSS Audio
+-- Found DocBookXSL: /usr/share/xml/docbook/xsl-stylesheets-1.79.2-nons
+FREERDP_VERSION=3.5.2-dev0
+-- Git Revision d1f0e2a0e
+-- Found ZLIB: /usr/lib/libz.so (found version "1.3.1")
+-- Looking for __x86_64__
+-- Looking for __x86_64__ - found
+-- GCC default symbol visibility: hidden
+-- Performing Test Wimplicit-function-declaration
+-- Performing Test Wimplicit-function-declaration - Success
+-- Performing Test Wredundant-decls
+-- Performing Test Wredundant-decls - Success
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test fno-omit-frame-pointer
+-- Performing Test fno-omit-frame-pointer - Success
+-- Finding recommended feature Wayland for Wayland (Wayland client)
+--     Disable feature Wayland using "-DWITH_WAYLAND=OFF"
+-- Found PkgConfig: /usr/bin/pkg-config (found version "2.1.1")
+-- Checking for module 'wayland-scanner'
+--   Found wayland-scanner, version 1.23.0
+-- Checking for module 'wayland-client'
+--   Found wayland-client, version 1.23.0
+-- Checking for module 'wayland-cursor'
+--   Found wayland-cursor, version 1.23.0
+-- Checking for module 'xkbcommon'
+--   Found xkbcommon, version 1.7.0
+-- Found Wayland: /usr/bin/wayland-scanner
+-- Finding required feature OpenSSL for cryptography (encryption, certificate validation, hashing functions)
+-- Found OpenSSL: /usr/lib/libcrypto.so (found version "3.3.1")
+-- Skipping optional feature MbedTLS for cryptography (encryption, certificate validation, hashing functions)
+--     Enable feature MbedTLS using "-DWITH_MBEDTLS=ON"
+-- Finding recommended feature PCSC for smart card (smart card device redirection)
+--     Disable feature PCSC using "-DWITH_PCSC=OFF"
+-- Found PCSC: /usr/lib/libpcsclite.so
+-- Skipping recommended feature FFmpeg for multimedia (multimedia redirection, audio and video playback)
+-- Skipping optional feature OpenH264 for codec (use OpenH264 library)
+--     Enable feature OpenH264 using "-DWITH_OPENH264=ON"
+-- Skipping optional feature OpenCL for codec (use OpenCL library)
+--     Enable feature OpenCL using "-DWITH_OPENCL=ON"
+-- Skipping optional feature GSM for codec (GSM audio codec library)
+--     Enable feature GSM using "-DWITH_GSM=ON"
+-- Skipping optional feature LAME for codec (lame MP3 audio codec library)
+--     Enable feature LAME using "-DWITH_LAME=ON"
+-- Skipping optional feature FAAD2 for codec (FAAD2 AAC audio codec library)
+--     Enable feature FAAD2 using "-DWITH_FAAD2=ON"
+-- Skipping optional feature FAAC for codec (FAAC AAC audio codec library)
+--     Enable feature FAAC using "-DWITH_FAAC=ON"
+-- Skipping optional feature soxr for codec (SOX audio resample library)
+--     Enable feature soxr using "-DWITH_SOXR=ON"
+-- Using OpenSSL Version: 3.3.1
+using default plugins location
+Configured RPATH=$ORIGIN/../lib:$ORIGIN/..
+-- Looking for strndup
+-- Looking for strndup - found
+-- Looking for include file unistd.h
+-- Looking for include file unistd.h - found
+-- Looking for include file execinfo.h
+-- Looking for include file execinfo.h - found
+-- Looking for backtrace
+-- Looking for backtrace - found
+-- Looking for backtrace_symbols
+-- Looking for backtrace_symbols - found
+-- Looking for backtrace_symbols_fd
+-- Looking for backtrace_symbols_fd - found
+-- Looking for include file inttypes.h
+-- Looking for include file inttypes.h - found
+-- Looking for include file stdint.h
+-- Looking for include file stdint.h - found
+-- Looking for include file stdbool.h
+-- Looking for include file stdbool.h - found
+-- Looking for include file fcntl.h
+-- Looking for include file fcntl.h - found
+-- Looking for include file aio.h
+-- Looking for include file aio.h - found
+-- Looking for include file sys/timerfd.h
+-- Looking for include file sys/timerfd.h - found
+-- Looking for include file sys/filio.h
+-- Looking for include file sys/filio.h - not found
+-- Looking for include file sys/sockio.h
+-- Looking for include file sys/sockio.h - not found
+-- Looking for include file syslog.h
+-- Looking for include file syslog.h - found
+-- Looking for include file sys/select.h
+-- Looking for include file sys/select.h - found
+-- Looking for include file sys/eventfd.h
+-- Looking for include file sys/eventfd.h - found
+-- Looking for include file unwind.h
+-- Looking for include file unwind.h - found
+-- Looking for eventfd_read
+-- Looking for eventfd_read - found
+-- Looking for getlogin_r
+-- Looking for getlogin_r - found
+-- Looking for getpwuid_r
+-- Looking for getpwuid_r - found
+-- Performing Test WINPR_HAVE_TM_GMTOFF
+-- Performing Test WINPR_HAVE_TM_GMTOFF - Success
+-- Looking for include file poll.h
+-- Looking for include file poll.h - found
+-- Looking for pthread_mutex_timedlock in pthreads
+-- Looking for pthread_mutex_timedlock in pthreads - not found
+-- Looking for pthread_mutex_timedlock in pthread
+-- Looking for pthread_mutex_timedlock in pthread - found
+-- Looking for pthread_mutex_timedlock
+-- Looking for pthread_mutex_timedlock - found
+-- Finding recommended feature OpenSSL for cryptography (encryption, certificate validation, hashing functions)
+--     Disable feature OpenSSL using "-DWITH_OPENSSL=OFF"
+-- Skipping optional feature MbedTLS for cryptography (encryption, certificate validation, hashing functions)
+--     Enable feature MbedTLS using "-DWITH_MBEDTLS=ON"
+CMake Warning at cmake/JsonDetect.cmake:7 (find_package):
+  By not providing "FindcJSON.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "cJSON", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "cJSON" with any of
+  the following names:
+
+    cJSONConfig.cmake
+    cjson-config.cmake
+
+  Add the installation prefix of "cJSON" to CMAKE_PREFIX_PATH or set
+  "cJSON_DIR" to a directory containing one of the above files.  If "cJSON"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+Call Stack (most recent call first):
+  winpr/libwinpr/CMakeLists.txt:19 (include)
+
+
+-- Checking for module 'libcjson'
+--   Package 'libcjson', required by 'virtual:world', not found
+-- Checking for module 'json-c'
+--   Found json-c, version 0.17
+-- Found JSONC: /usr/lib/libjson-c.so
+CMake Warning at winpr/libwinpr/CMakeLists.txt:107 (find_package):
+  By not providing "Finduriparser.cmake" in CMAKE_MODULE_PATH this project
+  has asked CMake to find a package configuration file provided by
+  "uriparser", but CMake did not find one.
+
+  Could not find a package configuration file provided by "uriparser" with
+  any of the following names:
+
+    uriparserConfig.cmake
+    uriparser-config.cmake
+
+  Add the installation prefix of "uriparser" to CMAKE_PREFIX_PATH or set
+  "uriparser_DIR" to a directory containing one of the above files.  If
+  "uriparser" provides a separate development package or SDK, be sure it has
+  been installed.
+
+
+-- Looking for timer_create
+-- Looking for timer_create - found
+-- Looking for timer_delete
+-- Looking for timer_delete - found
+-- Looking for timer_settime
+-- Looking for timer_settime - found
+-- Looking for timer_gettime
+-- Looking for timer_gettime - found
+-- Looking for pthread_setschedprio
+-- Looking for pthread_setschedprio - found
+-- Found libsystemd: /usr/lib/libsystemd.so
+CMake Warning at cmake/JsonDetect.cmake:7 (find_package):
+  By not providing "FindcJSON.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "cJSON", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "cJSON" with any of
+  the following names:
+
+    cJSONConfig.cmake
+    cjson-config.cmake
+
+  Add the installation prefix of "cJSON" to CMAKE_PREFIX_PATH or set
+  "cJSON_DIR" to a directory containing one of the above files.  If "cJSON"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+Call Stack (most recent call first):
+  winpr/libwinpr/utils/CMakeLists.txt:189 (include)
+
+
+-- Checking for module 'libcjson'
+--   Package 'libcjson', required by 'virtual:world', not found
+-- Looking for backtrace
+-- Looking for backtrace - found
+-- Checking for module 'mit-krb5'
+--   Found mit-krb5, version 1.21.3
+-- Checking for module 'heimdal-krb5'
+--   Package 'heimdal-krb5', required by 'virtual:world', not found
+-- Found KRB5: TRUE (found version "1.21.3")
+-- Found ICU: /usr/include (found version "75.1") found components: i18n uc io data
+add_library(winpr) []
+add_library(winpr-tools) []
+add_executable(winpr-makecert) []
+add_executable(winpr-hash) []
+Configured RPATH=$ORIGIN/../lib:$ORIGIN/..
+-- Looking for include file stdbool.h
+-- Looking for include file stdbool.h - found
+-- Finding required feature Wayland for Wayland (Wayland client)
+-- Found Wayland: /usr/bin/wayland-scanner
+-- Checking for module 'cairo'
+--   Found cairo, version 1.18.0
+-- Found Cairo: /usr/lib/libcairo.so
+CMake Warning at libfreerdp/CMakeLists.txt:101 (find_package):
+  By not providing "FindOpus.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "Opus", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "Opus" with any of
+  the following names:
+
+    OpusConfig.cmake
+    opus-config.cmake
+
+  Add the installation prefix of "Opus" to CMAKE_PREFIX_PATH or set
+  "Opus_DIR" to a directory containing one of the above files.  If "Opus"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+-- Checking for module 'opus'
+--   Found opus, version 1.5.2
+Using OPUS: 1
+CMake Warning at libfreerdp/CMakeLists.txt:117 (find_package):
+  By not providing "FindOpus.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "Opus", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "Opus" with any of
+  the following names:
+
+    OpusConfig.cmake
+    opus-config.cmake
+
+  Add the installation prefix of "Opus" to CMAKE_PREFIX_PATH or set
+  "Opus_DIR" to a directory containing one of the above files.  If "Opus"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+-- Checking for module 'opus'
+--   Found opus, version 1.5.2
+CMake Warning at libfreerdp/CMakeLists.txt:146 (message):
+  -DWITH_SWSCALE=OFF and -DWITH_CAIRO=OFF, compiling without image scaling
+  support!
+
+
+-- Looking for pow in m
+-- Looking for pow in m - found
+-- Found X11: /usr/include
+-- Looking for XOpenDisplay in /usr/lib/libX11.so;/usr/lib/libXext.so
+-- Looking for XOpenDisplay in /usr/lib/libX11.so;/usr/lib/libXext.so - found
+-- Looking for gethostbyname
+-- Looking for gethostbyname - found
+-- Looking for connect
+-- Looking for connect - found
+-- Looking for remove
+-- Looking for remove - found
+-- Looking for shmat
+-- Looking for shmat - found
+-- Looking for IceConnectionNumber in ICE
+-- Looking for IceConnectionNumber in ICE - found
+-- Looking for include files ctype.h, linux/vm_sockets.h
+-- Looking for include files ctype.h, linux/vm_sockets.h - not found
+CMake Warning at libfreerdp/CMakeLists.txt:164 (message):
+  Compiling without WITH_DSP_FFMPEG and WITH_FAAC, AAC encoder support
+  disabled
+
+
+add_library(freerdp) []
+-- Adding STATIC channel client server "drdynvc": Dynamic Virtual Channel Extension
+-- Adding DYNAMIC channel client "video": Video optimized remoting Virtual Channel Extension
+-- Adding DYNAMIC channel client "urbdrc": USB Devices Virtual Channel Extension
+-- Found libusb-1.0:
+--  - Includes: /usr/include/libusb-1.0
+--  - Libraries: /usr/lib/libusb-1.0.so
+-- Adding DYNAMIC channel server "telemetry": Telemetry Virtual Channel Extension
+-- Adding DEVICE channel client "smartcard": Smart Card Virtual Channel Extension
+-- Adding DEVICE channel client "serial": Serial Port Virtual Channel Extension
+-- Adding STATIC channel client server "remdesk": Remote Assistance Virtual Channel Extension
+-- Adding STATIC channel client server "rdpsnd": Audio Output Virtual Channel Extension
+-- Found OSS Audio
+-- Adding DYNAMIC channel client server "rdpgfx": Graphics Pipeline Extension
+-- Adding DYNAMIC channel server "rdpemsc": Mouse Cursor Virtual Channel Extension
+-- Adding DYNAMIC channel client server "rdpei": Input Virtual Channel Extension
+-- Adding DYNAMIC channel server "rdpecam": Video Capture Virtual Channel Extension
+-- Adding STATIC channel client server "rdpdr": Device Redirection Virtual Channel Extension
+-- Adding STATIC channel client "rdp2tcp": Tunneling TCP over RDP
+-- Adding STATIC channel client server "rail": Remote Programs Virtual Channel Extension
+-- Adding DEVICE channel client "printer": Print Virtual Channel Extension
+-- Found Cups: /usr/lib/libcups.so (found suitable version "2.4.10", minimum required is "2.0")
+-- Adding DEVICE channel client "parallel": Parallel Port Virtual Channel Extension
+-- Adding DYNAMIC channel client server "location": Location Virtual Channel Extension
+-- Adding DYNAMIC channel client "geometry": Geometry tracking Virtual Channel Extension
+-- Adding STATIC channel client server "encomsp": Multiparty Virtual Channel Extension
+-- Adding DYNAMIC channel client server "echo": Echo Virtual Channel Extension
+-- Adding DEVICE channel client "drive": Drive Redirection Virtual Channel Extension
+-- Adding DYNAMIC channel client server "disp": Display Update Virtual Channel Extension
+-- Adding STATIC channel client server "cliprdr": Clipboard Virtual Channel Extension
+-- Adding DYNAMIC channel client server "audin": Audio Input Redirection Virtual Channel Extension
+-- Found OSS Audio
+-- Adding DYNAMIC channel client server "ainput": Advanced Input Virtual Channel Extension
+-- Checking for module 'fuse3'
+--   Found fuse3, version 3.16.2
+add_library(freerdp-client) []
+-- The CXX compiler identification is GNU 14.1.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+project sdl-freerdp is using version 3.5.2
+Configured RPATH=$ORIGIN/../lib:$ORIGIN/..
+CMake Warning at client/SDL/CMakeLists.txt:65 (find_package):
+  By not providing "FindSDL3.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "SDL3", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "SDL3" with any of
+  the following names:
+
+    SDL3Config.cmake
+    sdl3-config.cmake
+
+  Add the installation prefix of "SDL3" to CMAKE_PREFIX_PATH or set
+  "SDL3_DIR" to a directory containing one of the above files.  If "SDL3"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+add_executable(sdl2-freerdp) []
+using /home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb/client/SDL/SDL2/man/sdl-freerdp-channels.1.xml from /home/pavlo-myroniuk/apriorit/FreeRDP/client/SDL/SDL2/man/../../common/man/sdl-freerdp-channels.1.xml.in
+generating /home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb/client/SDL/SDL2/man/sdl-freerdp-config.1.xml from /home/pavlo-myroniuk/apriorit/FreeRDP/client/SDL/SDL2/man/../../common/man/sdl-freerdp-config.1.xml.in
+generating /home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb/client/SDL/SDL2/man/sdl-freerdp-examples.1.xml from /home/pavlo-myroniuk/apriorit/FreeRDP/client/SDL/SDL2/man/../../common/man/sdl-freerdp-examples.1.xml.in
+generating /home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb/client/SDL/SDL2/man/sdl-freerdp-envvar.1.xml from /home/pavlo-myroniuk/apriorit/FreeRDP/client/SDL/SDL2/man/../../common/man/sdl-freerdp-envvar.1.xml.in
+project xfreerdp-client is using version 3.5.2
+CMake Warning at cmake/CommonConfigOptions.cmake:20 (message):
+  LTO not supported, got CMake doesn't support IPO for current CXX compiler
+Call Stack (most recent call first):
+  client/X11/CMakeLists.txt:36 (include)
+
+
+Configured RPATH=$ORIGIN/../lib:$ORIGIN/..
+add_library(xfreerdp-client) [STATIC]
+using /home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb/client/X11/man/xfreerdp-channels.1.xml from /home/pavlo-myroniuk/apriorit/FreeRDP/client/X11/man/xfreerdp-channels.1.xml.in
+add_executable(xfreerdp) []
+add_executable(wlfreerdp) []
+-- Intrinsic path configuration:
+-- FREERDP_INSTALL_PREFIX=/home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb/debug
+-- FREERDP_LIBRARY_PATH=lib
+-- FREERDP_PLUGIN_PATH=lib/freerdp3
+-- FREERDP_ADDIN_PATH=lib/freerdp3
+-- FREERDP_EXTENSION_PATH=/home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb/debug/lib/freerdp3/extensions
+-- FREERDP_PROXY_PLUGINDIR=lib/freerdp3/proxy/
+-- Configuring done (5.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/pavlo-myroniuk/apriorit/FreeRDP/freerdp-build-pkcs11-krb
