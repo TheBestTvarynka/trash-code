@@ -22,3 +22,4 @@ at delete_it | LD_LIBRARY_PATH=/usr/local/lib pkcs11-tool --module "/usr/local/l
 LD_LIBRARY_PATH=/usr/local/lib 
 gcc main.c -I/usr/include/pkcs11-helper-1.0 && LD_LIBRARY_PATH=/usr/local/lib ./a.out
 LD_LIBRARY_PATH=/usr/local/lib pkcs11-tool --module "/usr/local/lib/libykcs11.so.2.5.2" --list-token-slots
+cmake -GNinja -B freerdp-build-6 -S ./ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_SKIP_INSTALL_ALL_DEPENDENCY=ON -DWITH_SERVER=OFF -DWITH_SAMPLE=OFF -DWITH_PLATFORM_SERVER=OFF -DUSE_UNWIND=OFF -DWITH_SWSCALE=OFF -DWITH_FFMPEG=OFF -DWITH_WEBVIEW=OFF -WITH_PKCS11=ON -WITH_KRB5=ON -WITH_KRB5_NO_NTLM_FALLBACK=ON -DCHANNEL_URBDRC=OFF -DCMAKE_INSTALL_PREFIX=/usr/local -WITH_SMARTCARD_PCSC=ON
