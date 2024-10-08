@@ -37,3 +37,21 @@ export KRB5_CONFIG=/home/pavlo-myroniuk/apriorit/reverse_freerdp_scard_auth/krb5
 export WLOG_LEVEL=trace
 
 LD_PRELOAD=/usr/lib/libpcsclite.so.1 gdb --args xfreerdp /v:DESKTOP-8F33RFH.tbt.com /u:t2@tbt.com /p:123456 /cert:ignore /log-level:TRACE /smartcard-logon /sec:nla /kerberos:pkcs11-module:libykcs11.so.2.5.2 /auth-pkg-list:\!ntlm,kerberos /winscard-module:libsspi.so
+
+export WLOG_LEVEL=trace 
+export KRB5_TRACE=/dev/stdout
+export KRB5_CONFIG=/Users/tbt/Documents/projects/trash-code/reverse_freerdp_scard_auth/krb5.conf 
+export SSPI_LOG_PATH=/Users/tbt/Documents/projects/sspi-rs/target/debug/sspi.log 
+export SSPI_LOG_LEVEL=trace
+export WINSCARD_USE_SYSTEM_SCARD=true
+export WINSCARD_SMARTCARD_CONTAINER_NAME=1d8ac658-e065-92a0-85af-090b075fc105
+export PCSC_LITE_LIB_PATH=/System/Library/Frameworks/PCSC.framework/PCSC
+export WINSCARD_CERTIFICATE_FILE_PATH=/Users/tbt/Documents/new_t2@tbt.com.cer
+
+less -R ~/Documents/projects/sspi-rs/target/debug/sspi.log
+echo "" > ~/Documents/projects/sspi-rs/target/debug/sspi.log
+kill -s KILL "$(ps axu | grep "./xfreerdp" | grep -v "grep" | tr -s ' ' |  cut -d " " -f 2)"
+
+./xfreerdp /v:DESKTOP-8F33RFH.tbt.com /u:t2@tbt.com /p:123456 /cert:ignore /log-level:TRACE /smartcard-logon /sec:nla /kerberos:pkcs11-module:libykcs11.2.6.0.dylib /auth-pkg-list:\!ntlm,kerberos /winscard-module:libsspi.dylib > ~/Documents/freerdp-out.txt 2> ~/Documents/freerdp-err.txt
+cargo build --features scard && sudo cp ../target/debug/libsspi.dylib /usr/local/lib
+cat delete_it | pkcs11-tool --module "libykcs11.2.6.0.dylib" -m RSA-PKCS -p 123456 -s --id 01 | base64
