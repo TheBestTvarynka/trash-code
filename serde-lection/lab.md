@@ -13,7 +13,7 @@ Prove your implementation correctness with tests.
   - Ariphmetic operator: `-`, `+`, `*`, `/`, `^` (exponentiation).
   - Parentheses: `(`, `)`.
 2. Implement this grammar. You can use parser generators or parser combinators. Pick any Rust library you want.
-3. Wrap the grammar implementation into a small program that accepts arithmetic expression as the input and prints the calculated result. Exampe:
+3. Wrap the grammar implementation into a small program that accepts arithmetic expression as the input and prints the calculated result. Example:
   ```bash
   > ./my_app "4+5*2"
   14
@@ -29,3 +29,4 @@ Important notes:
 
 - You are **not allowed** to hardcode grammar rules using tons of `if-else` statements.
 - You are **not allowed** to use [Reverse Polish Notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation).
+- You are **allowed** to use libraries for making parsers but not for expression evaluation.
