@@ -10,13 +10,18 @@ Prove your implementation correctness with tests.
 
 1. Create a grammar for parsing arithmetic expressions. The grammar should support the following:
   - Integer numbers.
-  - Ariphmetic operator: `-`, `+`, `*`, `/`, `^` (pow operator),.
+  - Ariphmetic operator: `-`, `+`, `*`, `/`, `^` (exponentiation).
   - Parentheses: `(`, `)`.
 2. Implement this grammar. You can use parser generators or parser combinators. Pick any Rust library you want.
 3. Wrap the grammar implementation into a small program that accepts arithmetic expression as the input and prints the calculated result. Exampe:
   ```bash
   > ./my_app "4+5*2"
   14
+  >
+  ```
+  ```bash
+  > ./my_app "3+2^(4+2)-6"
+  61
   >
   ```
 
