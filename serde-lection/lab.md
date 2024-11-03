@@ -28,4 +28,4 @@ Prove your implementation correctness with tests.
 Important notes:
 
 - You are **not allowed** to hardcode grammar rules using tons of `if-else` statements.
-- You are **not allowed** to use Reverse [Polish Notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation).
+- You are **not allowed** to use [Reverse Polish Notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation).
