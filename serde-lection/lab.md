@@ -2,7 +2,7 @@
 
 ## Serde
 
-Write a program that deserializes the following JSON into a static `Request` type and prints out its serialization in _YAML_ and _TOML_ formats. Consider to choose **correct types for data representation**.
+Write a program that deserializes [the following JSON](https://github.com/TheBestTvarynka/trash-code/blob/serde-lection/serde-lection/request.json) into a static `Request` type and prints out its serialization in _YAML_ and _TOML_ formats. Consider to choose **correct types for data representation**.
 
 Prove your implementation correctness with tests.
 
