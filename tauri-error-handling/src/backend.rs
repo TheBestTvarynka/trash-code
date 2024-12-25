@@ -1,5 +1,3 @@
-use common::Error;
-
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::{to_value, from_value};
 use wasm_bindgen::prelude::*;
@@ -15,11 +13,13 @@ struct GreetArgs<'a> {
     name: &'a str,
 }
 
-pub async fn greet(name: &str) -> Result<String, Error> {
+pub async fn greet(name: &str) -> Option<()> {
     let args = to_value(&GreetArgs { name }).expect("GreetArgs to JsValue should not fail");
 
-    match invoke("greet", args).await {
-        Ok(msg) => Ok(from_value(msg).unwrap()),
-        Err(err) => Err(from_value(err).unwrap()),
-    }
+    let js_value = invoke("greet", args).await.expect("should not fail");
+
+    let result: Option<()> = from_value(js_value).expect("deserialization should not fail");
+    info!("Result: {:?}", result);
+
+    result
 }

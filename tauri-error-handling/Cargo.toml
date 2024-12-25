@@ -14,6 +14,8 @@ serde-wasm-bindgen = "0.6"
 console_error_panic_hook = "0.1.7"
 
 common = { path = "./common" }
+wasm-logger = "0.2.0"
+log = "0.4.22"
 
 [workspace]
 members = ["common", "src-tauri"]

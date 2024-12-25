@@ -1,14 +1,10 @@
-use common::Error;
-
-fn validate_name(_name: &str) -> Result<(), Error> {
-    Err(Error::InvalidName("Tbt".into()))
-}
+use common::{Error, Tbt};
 
 #[tauri::command]
-fn greet(name: &str) -> Result<String, Error> {
-    validate_name(name)?;
+fn greet(name: &str) -> Option<()> {
+    // do the work here
 
-    Ok(format!("Hello, {}! You've been greeted from Rust!", name))
+    Some(())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
