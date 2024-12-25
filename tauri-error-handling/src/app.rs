@@ -21,7 +21,11 @@ pub fn App() -> impl IntoView {
                 return;
             }
             
-            set_greet_msg.set(greet(&name).await);
+            let msg = match greet(&name).await {
+                Ok(msg) => msg,
+                Err(err) => err.to_string(),
+            };
+            set_greet_msg.set(msg);
         });
     };
 
