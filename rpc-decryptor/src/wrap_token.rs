@@ -1,3 +1,7 @@
+use std::io::Read;
+
+use byteorder::{BigEndian, ReadBytesExt};
+
 pub struct WrapTokenHeader {
     pub flags: u8,
     pub ec: u16,
@@ -17,5 +21,29 @@ impl WrapTokenHeader {
         header_data[8..].copy_from_slice(&self.send_seq.to_be_bytes());
 
         header_data
+    }
+
+    pub fn from_bytes(mut src: impl Read) -> Self {
+        if src.read_u16::<BigEndian>().unwrap() != 0x0504 {
+            panic!("Invalid Wrap Token ID");
+        }
+
+        let flags = src.read_u8().unwrap();
+
+        let filler = src.read_u8().unwrap();
+        if filler != 0xff {
+            panic!("Invalid filler");
+        }
+
+        let ec = src.read_u16::<BigEndian>().unwrap();
+        let rrc = src.read_u16::<BigEndian>().unwrap();
+        let send_seq = src.read_u64::<BigEndian>().unwrap();
+
+        Self {
+            flags,
+            ec,
+            rrc,
+            send_seq,
+        }
     }
 }

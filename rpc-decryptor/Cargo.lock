@@ -424,6 +424,7 @@ dependencies = [
 name = "rpc-decryptor"
 version = "0.1.0"
 dependencies = [
+ "byteorder",
  "picky-krb",
  "rand 0.9.0",
 ]
