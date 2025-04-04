@@ -4,17 +4,41 @@ use picky_krb::crypto::{Cipher, DecryptWithoutChecksum, EncryptWithoutChecksum};
 use crate::security_buffer::{SecBuffer, DATA, READONLY_WITH_CHECKSUM_FLAG, TOKEN};
 use crate::wrap_token::WrapTokenHeader;
 
+/// [Kerberos Binding of GSS_WrapEx()](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-kile/e94b3acd-8415-4d0d-9786-749d0c39d550).
+///
+/// The EC field SHALL be used to encode the number of octets in the filler,
+///
+/// Pad: For AES-SHA1 ciphers using GSS_WrapEx, the extra count (EC) must not be zero.
+/// The sender should set extra count (EC) to 1 block - 16 bytes.
 const EC: u16 = 16;
+/// [Kerberos Binding of GSS_WrapEx()](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-kile/e94b3acd-8415-4d0d-9786-749d0c39d550).
+///
+/// Excluding the first 16 octets of the token header, the resulting Wrap token in the previous section is rotated to the right by "RRC" octets.
+///
+/// The RRC field ([RFC4121] section 4.2.5) is 28 if encryption is requested.
 const RRC: u16 = 28;
 
+/// [Key Derivation for Per-Message Tokens](https://www.rfc-editor.org/rfc/rfc4121.html#section-2)
+///
+/// To limit the exposure of a given key, [RFC3961] adopted "one-way"
+/// "entropy-preserving" derived keys, from a base key or protocol key,
+/// for different purposes or key usages.
+///
+/// KG-USAGE-INITIATOR-SEAL        24
 const CLIENT_ENCRYPTION_KEY_USAGE: i32 = 24;
+/// KG-USAGE-ACCEPTOR-SEAL         22
 const CLIENT_DECRYPTION_KEY_USAGE: i32 = 22;
 
 const SERVER_ENCRYPTION_KEY_USAGE: i32 = CLIENT_DECRYPTION_KEY_USAGE;
 const SERVER_DECRYPTION_KEY_USAGE: i32 = CLIENT_ENCRYPTION_KEY_USAGE;
 
-const CB_SECURITY_TRAILER: usize = 76;
+const CB_SECURITY_TRAILER: usize = 16 /* wrap token header len */
+    + 16 /* confounder len */
+    + EC as usize
+    + 16 /* wrap token header (encrypted) len */
+    + 12 /* checksum (hmac) len */;
 
+/// Encrypt the message using the provided key and key usage.
 fn encrypt(key: &[u8], key_usage: i32, send_seq: u64, message: &mut [SecBuffer<'_>]) {
     let mut wrap_token_header = WrapTokenHeader {
         flags: 0x06,
@@ -150,6 +174,7 @@ fn decrypt(key: &[u8], key_usage: i32, message: &mut [SecBuffer<'_>]) {
         });
 }
 
+/// Simple Kerberos client implementation.
 pub struct KerberosClient {
     key: Vec<u8>,
     send_seq: u64,
