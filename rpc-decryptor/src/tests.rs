@@ -15,11 +15,8 @@ fn encrypt_decrypt() {
         SecBuffer::new(DATA, &mut data_buf),
         SecBuffer::new(TOKEN, &mut token_buf),
     ];
-    println!("plain message: {:?}", message);
 
     kerberos_client.encrypt_message(&mut message);
-    println!("encrypted message: {:?}", message);
-
     kerberos_client.decrypt_message(&mut message);
 
     assert_eq!(message[0].data, tbt);
