@@ -9,8 +9,12 @@ use crate::wrap_token::WrapTokenHeader;
 const EC: u16 = 16;
 const RRC: u16 = 28;
 
-const ENCRYPTION_KEY_USAGE: i32 = 24;
-// const DECRYPTION_KEY_USAGE: i32 = 22;
+const CLIENT_ENCRYPTION_KEY_USAGE: i32 = 24;
+const CLIENT_DECRYPTION_KEY_USAGE: i32 = 22;
+
+const SERVER_ENCRYPTION_KEY_USAGE: i32 = CLIENT_DECRYPTION_KEY_USAGE;
+const SERVER_DECRYPTION_KEY_USAGE: i32 = CLIENT_ENCRYPTION_KEY_USAGE;
+
 const CB_SECURITY_TRAILER: usize = 76;
 
 fn encrypt(key: &[u8], key_usage: i32, message: &mut [SecBuffer<'_>]) {
@@ -160,10 +164,30 @@ impl KerberosClient {
     }
 
     pub fn encrypt_message(&self, message: &mut [SecBuffer<'_>]) {
-        encrypt(&self.key, ENCRYPTION_KEY_USAGE, message);
+        encrypt(&self.key, CLIENT_ENCRYPTION_KEY_USAGE, message);
     }
 
     pub fn decrypt_message(&self, message: &mut [SecBuffer<'_>]) {
-        decrypt(&self.key, ENCRYPTION_KEY_USAGE, message);
+        decrypt(&self.key, CLIENT_DECRYPTION_KEY_USAGE, message);
+    }
+}
+
+pub struct KerberosServer {
+    key: Vec<u8>,
+}
+
+impl KerberosServer {
+    pub const TOKEN_LEN: usize = CB_SECURITY_TRAILER;
+
+    pub fn new(key: Vec<u8>) -> Self {
+        Self { key }
+    }
+
+    pub fn encrypt_message(&self, message: &mut [SecBuffer<'_>]) {
+        encrypt(&self.key, SERVER_ENCRYPTION_KEY_USAGE, message);
+    }
+
+    pub fn decrypt_message(&self, message: &mut [SecBuffer<'_>]) {
+        decrypt(&self.key, SERVER_DECRYPTION_KEY_USAGE, message);
     }
 }
