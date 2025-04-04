@@ -1,7 +1,5 @@
 use picky_krb::crypto::aes::Aes256CtsHmacSha196;
 use picky_krb::crypto::{Cipher, DecryptWithoutChecksum, EncryptWithoutChecksum};
-use rand::rngs::OsRng;
-use rand::TryRngCore;
 
 use crate::security_buffer::{SecBuffer, DATA, READONLY_WITH_CHECKSUM_FLAG, TOKEN};
 use crate::wrap_token::WrapTokenHeader;
@@ -17,12 +15,12 @@ const SERVER_DECRYPTION_KEY_USAGE: i32 = CLIENT_ENCRYPTION_KEY_USAGE;
 
 const CB_SECURITY_TRAILER: usize = 76;
 
-fn encrypt(key: &[u8], key_usage: i32, message: &mut [SecBuffer<'_>]) {
+fn encrypt(key: &[u8], key_usage: i32, send_seq: u64, message: &mut [SecBuffer<'_>]) {
     let mut wrap_token_header = WrapTokenHeader {
         flags: 0x06,
         ec: EC,
         rrc: 0,
-        send_seq: OsRng.try_next_u64().unwrap(),
+        send_seq,
     };
     let encoded_wrap_token_header = wrap_token_header.encoded();
     let filler = vec![0; usize::from(EC)];
@@ -154,17 +152,18 @@ fn decrypt(key: &[u8], key_usage: i32, message: &mut [SecBuffer<'_>]) {
 
 pub struct KerberosClient {
     key: Vec<u8>,
+    send_seq: u64,
 }
 
 impl KerberosClient {
     pub const TOKEN_LEN: usize = CB_SECURITY_TRAILER;
 
-    pub fn new(key: Vec<u8>) -> Self {
-        Self { key }
+    pub fn new(key: Vec<u8>, send_seq: u64) -> Self {
+        Self { key, send_seq }
     }
 
     pub fn encrypt_message(&self, message: &mut [SecBuffer<'_>]) {
-        encrypt(&self.key, CLIENT_ENCRYPTION_KEY_USAGE, message);
+        encrypt(&self.key, CLIENT_ENCRYPTION_KEY_USAGE, self.send_seq, message);
     }
 
     pub fn decrypt_message(&self, message: &mut [SecBuffer<'_>]) {
@@ -174,17 +173,18 @@ impl KerberosClient {
 
 pub struct KerberosServer {
     key: Vec<u8>,
+    send_seq: u64,
 }
 
 impl KerberosServer {
     pub const TOKEN_LEN: usize = CB_SECURITY_TRAILER;
 
-    pub fn new(key: Vec<u8>) -> Self {
-        Self { key }
+    pub fn new(key: Vec<u8>, send_seq: u64) -> Self {
+        Self { key, send_seq }
     }
 
     pub fn encrypt_message(&self, message: &mut [SecBuffer<'_>]) {
-        encrypt(&self.key, SERVER_ENCRYPTION_KEY_USAGE, message);
+        encrypt(&self.key, SERVER_ENCRYPTION_KEY_USAGE, self.send_seq, message);
     }
 
     pub fn decrypt_message(&self, message: &mut [SecBuffer<'_>]) {
