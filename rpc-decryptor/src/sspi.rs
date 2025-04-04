@@ -10,14 +10,20 @@ const EC: u16 = 16;
 const RRC: u16 = 28;
 
 const ENCRYPTION_KEY_USAGE: i32 = 24;
-const DECRYPTION_KEY_USAGE: i32 = 22;
+// const DECRYPTION_KEY_USAGE: i32 = 22;
 const CB_SECURITY_TRAILER: usize = 76;
 
 pub struct KerberosClient {
-    pub key: Vec<u8>,
+    key: Vec<u8>,
 }
 
 impl KerberosClient {
+    pub const TOKEN_LEN: usize = CB_SECURITY_TRAILER;
+
+    pub fn new(key: Vec<u8>) -> Self {
+        Self { key }
+    }
+
     pub fn encrypt_message(&self, message: &mut [SecBuffer<'_>]) {
         let mut wrap_token_header = WrapTokenHeader {
             flags: 0x06,
@@ -51,27 +57,32 @@ impl KerberosClient {
             .encrypt_no_checksum(&self.key, ENCRYPTION_KEY_USAGE, &data_to_encrypt)
             .unwrap();
 
-        let data_to_sign = message.iter().fold(confounder, |mut acc, sec_buffer| {
+        let mut data_to_sign = message.iter().fold(confounder, |mut acc, sec_buffer| {
             if sec_buffer.buffer_type == DATA | READONLY_WITH_CHECKSUM_FLAG {
+                acc.extend_from_slice(sec_buffer.data);
+            } else if sec_buffer.buffer_type == DATA {
                 acc.extend_from_slice(sec_buffer.data);
             }
 
             acc
         });
         // + Filler
-        data_to_encrypt.extend_from_slice(&filler);
+        data_to_sign.extend_from_slice(&filler);
         // + Wrap token header
-        data_to_encrypt.extend_from_slice(&encoded_wrap_token_header);
+        data_to_sign.extend_from_slice(&encoded_wrap_token_header);
+        println!("data_to_sign: {:?} {}", data_to_sign, data_to_sign.len());
 
         let checksum = cipher
             .encryption_checksum(&self.key, ENCRYPTION_KEY_USAGE, &data_to_sign)
             .unwrap();
+        println!("checksum: {:?}", checksum);
 
         encrypted.extend_from_slice(&checksum);
 
         encrypted.rotate_right(usize::from(RRC + EC));
 
         wrap_token_header.rrc = RRC;
+        println!("wrap_token_header: {:?}", wrap_token_header);
 
         // final Wrap Token
         let mut raw_wrap_token = wrap_token_header.encoded().to_vec();
@@ -107,6 +118,7 @@ impl KerberosClient {
 
         let (wrap_token_header, encrypted) = wrap_token.split_at_mut(16 /* Wrap Token header length */);
         let wrap_token_header = WrapTokenHeader::from_bytes(wrap_token_header as &[u8]);
+        println!("wrap_token_header: {:?}", wrap_token_header);
 
         encrypted.rotate_left(usize::from(wrap_token_header.rrc + wrap_token_header.ec));
 
@@ -118,31 +130,38 @@ impl KerberosClient {
             checksum,
             ki: _,
         } = cipher
-            .decrypt_no_checksum(&self.key, DECRYPTION_KEY_USAGE, encrypted)
+            .decrypt_no_checksum(&self.key, ENCRYPTION_KEY_USAGE, encrypted)
             .unwrap();
+        println!("checksum: {:?}", checksum);
 
         let plaintext_len =
             plaintext.len() - usize::from(wrap_token_header.ec + 16 /* Wrap Token header length */);
-        let (plaintext, wrap_token_header) = plaintext.split_at(plaintext_len);
+
+        // plaintext - decrypted data.
+        // data - filler + wrap token.
+        let (plaintext, data) = plaintext.split_at(plaintext_len);
+
+        println!("plaintext len: {:?} {}", plaintext, plaintext.len());
 
         let mut decrypted = plaintext;
         let mut data_to_sign = message.iter().fold(confounder, |mut acc, sec_buffer| {
             if sec_buffer.buffer_type == DATA | READONLY_WITH_CHECKSUM_FLAG {
+                println!("DATA | READONLY_WITH_CHECKSUM_FLAG");
                 acc.extend_from_slice(sec_buffer.data);
             } else if sec_buffer.buffer_type == DATA {
+                println!("DATA");
                 acc.extend_from_slice(&decrypted[0..sec_buffer.data.len()]);
                 decrypted = &decrypted[sec_buffer.data.len()..];
             }
 
             acc
         });
-        // + Filler
-        data_to_sign.extend_from_slice(&vec![0; usize::from(EC)]);
-        // + Wrap token header
-        data_to_sign.extend_from_slice(wrap_token_header);
+        // + Filler + Wrap token header
+        data_to_sign.extend_from_slice(data);
+        println!("data_to_sign: {:?} {}", data_to_sign, data_to_sign.len());
 
         let calculated_checksum = cipher
-            .encryption_checksum(&self.key, DECRYPTION_KEY_USAGE, &data_to_sign)
+            .encryption_checksum(&self.key, ENCRYPTION_KEY_USAGE, &data_to_sign)
             .unwrap();
 
         if calculated_checksum != checksum {

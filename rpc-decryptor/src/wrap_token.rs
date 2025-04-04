@@ -2,6 +2,7 @@ use std::io::Read;
 
 use byteorder::{BigEndian, ReadBytesExt};
 
+#[derive(Debug)]
 pub struct WrapTokenHeader {
     pub flags: u8,
     pub ec: u16,
