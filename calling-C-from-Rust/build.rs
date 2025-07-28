@@ -1,7 +1,7 @@
 use std::path::Path;
 
 fn main() {
-    println!("cargo:rustc-link-lib=static=simplelib"); // or "static=simplelib"
+    println!("cargo:rustc-link-lib=static=simplelib");
     println!("cargo:rustc-link-search=native=./");
 
     let bindings = bindgen::Builder::default()

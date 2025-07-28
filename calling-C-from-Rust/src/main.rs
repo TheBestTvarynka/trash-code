@@ -1,3 +1,4 @@
+// Generated bindings:
 #[allow(non_camel_case_types)]
 #[allow(non_snake_case)]
 #[allow(dead_code)]
@@ -5,6 +6,7 @@ mod simplelib;
 
 use libc::{c_char, c_int, size_t};
 
+// Manual bindings:
 unsafe extern "C" {
     unsafe fn get_hostname(name: *mut c_char, length: *mut size_t) -> c_int;
 }
